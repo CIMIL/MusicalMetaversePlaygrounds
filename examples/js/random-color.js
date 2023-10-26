@@ -1,9 +1,7 @@
 AFRAME.registerComponent('random-color', {
-  dependencies: ['material'], //Inizializza il materiale prima di questo, così il nostro mat. non viene sovrascritto
+  dependencies: ['material'], 
 
   init: function () {
-    //this.el = reference to the entity that the component is attached to
-    //set material component's color property to a random color
     this.el.setAttribute('material', 'color', getRandomColor());
   },
 });

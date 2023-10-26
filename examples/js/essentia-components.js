@@ -5,25 +5,19 @@ AFRAME.registerComponent('bar-volume', {
   },
   tick: function (time, deltaTime) {
     if (init) {
-      const volume = analyserDataArray[0];
+      volume = analyserDataArray[0];
 
-      if (volume > 0.005) this.el.object3D.scale.y = volume * 200;
-      else if (this.el.object3D.scale.y > 1) this.el.object3D.scale.y -= 0.1;
+      if (volume > 0.1) this.el.object3D.scale.y = volume * 1000;
+      //else if (this.el.object3D.scale.y > 1) this.el.object3D.scale.y -= 0.1;
     }
   },
   events: {
-    click: function (evt) { //click: function (evt) { //click-------
-        //serve per far si che le modifiche fatte al cubo siano condivise per tutti (in questo caso agisce solo sul colore)
+    click: function (evt) { //click: function (evt) { 
         NAF.utils.takeOwnership(this.el);
-
-        
-        console.log("00001");
-
     }
 },
 });
 
-//Aggiungere NAF.schema, se si vuole fare in modo che la scala delle mie barre cambi anche per gli altri utenti
 AFRAME.registerComponent('bar-volume-diff', {
   dependencies: ['size'],
   init: function () {
@@ -31,15 +25,15 @@ AFRAME.registerComponent('bar-volume-diff', {
   },
   tick: function (time, deltaTime) {
     if (init && NAF.utils.isMine(this.el)) {
-      const volume = analyserDataArray[0]; //essentia
+       volume = analyserDataArray[0]; //essentia    ??? forse fft
       //const volume = toneRms; //tone
       // volume > 0.005
       if (volume > 0.0025) {
-        this.el.object3D.scale.y = volume * 100; //200
+        this.el.object3D.scale.y = toneRms * (Math.random()*500); //volume * ((Math.random(toneRms)*100)); //200 //toneRms
         //sendTimeStamp('bar-vol-change-event');
       }
       else if (this.el.object3D.scale.y > 1) {
-        this.el.object3D.scale.y -= 0.1;
+        this.el.object3D.scale.y -= 0.1; //0.1
       }
     }
     
@@ -73,10 +67,10 @@ AFRAME.registerComponent('bars-waveform', {
       this.bars[i].setAttribute('position', {
         x: i,
         y: 0,
-        z: 10, //-3
+        z: -3, //-3
       });
-      this.bars[i].setAttribute('random-color', '');
-
+      
+      this.bars[i].setAttribute('random-color-transparent', '');
       el.appendChild(this.bars[i]);
     }
   },
@@ -100,7 +94,7 @@ AFRAME.registerComponent('bars-waveform', {
   },
 });
 
-AFRAME.registerComponent('labbro', {
+AFRAME.registerComponent('lips', {
   dependencies: ['size'],
 
   schema: {
@@ -116,7 +110,6 @@ AFRAME.registerComponent('labbro', {
 
     this.pos = el.object3D.position.y;
 
-    //this.rad = el.object3D.radius;
   },
 
   tick: function (time, deltaTime) {
@@ -147,11 +140,10 @@ AFRAME.registerComponent('labbro', {
   },
 });
 
-// ----------------- HUD ----------------------
 
 AFRAME.registerComponent('chord', {
   tick: function (time, deltaTime) {
-    this.el.setAttribute('value', 'Chord: ' + chord);
+    this.el.setAttribute('value', 'CHORD: ' + chord);
   },
 });
 
@@ -165,7 +157,6 @@ AFRAME.registerComponent('rms', {
   },
 });
 
-// -------------- Hairs -------------------
 
 AFRAME.registerComponent('hairs', {
   dependencies: ['size'],
@@ -239,8 +230,6 @@ AFRAME.registerComponent('hair', {
   },
 });
 
-
-//////////////
 
 function sendTimeStamp(nomeEvento){
   var creationTime = new Date().getTime();

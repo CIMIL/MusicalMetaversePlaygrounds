@@ -1,9 +1,4 @@
-/**
- * Spawn entity at the intersection point on click, given the properties passed.
- *
- * `<a-entity intersection-spawn="mixin: box; material.color: red">` will spawn
- * `<a-entity mixin="box" material="color: red">` at intersection point.
- */
+
 AFRAME.registerComponent('intersection-spawn', {
   schema: {
     default: '',

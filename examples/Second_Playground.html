@@ -6,47 +6,75 @@
   <meta name="description"
     content="Dev Example — Networked-Aframe">
 
-  
-
-  <!-- Aframe -->
   <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.5.0/socket.io.slim.js"></script>
   <script src="/easyrtc/easyrtc.js"></script>
   <script src="https://unpkg.com/networked-aframe@^0.11.0/dist/networked-aframe.min.js"></script>
 
-  <!-- Essentia -->
   <script src="https://unpkg.com/essentia.js@0.0.9-dev/dist/essentia-wasm.web.js"></script>
   <script src="https://unpkg.com/essentia.js@0.0.9-dev/dist/essentia.js-core.js"></script>
   <script src="https://unpkg.com/essentia.js@0.0.9-dev/dist/essentia.js-plot.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-  <!-- Tonejs -->
-  <script src="https://unpkg.com/tone@~14.7.77"></script> <!--https://unpkg.com/tone-->
+  <script src="https://unpkg.com/tone@~14.7.77"></script> 
 
-  <!-- Miei -->
   <script src="js/voxel-spawn.js"></script>
   <script src="js/random-color.js"></script>
+  <script src="js/random-color-transparent.js"></script>
   <script src="js/spawn-in-circle.component.js"></script>
-  <script src="js/audio-worklet.js"></script> <!--Tone js stuff-->
-  <script src="js/essentia-components.js"></script> <!--volume bars, waveforms, mouth, hair...-->
-  <!--<script src="js/managerMessage.js"></script>-->
-
-  <!-- Extras - NAF options -->
-  <script>NAF.options.updateRate = 90; //default 15, around 10-20 for multiusers... 1000ms /30 = 33.3</script> 
-  <!-- Lerp -->
+  <script src="js/audio-worklet.js"></script> 
+  <script src="js/essentia-components.js"></script>
+  
+  <script>NAF.options.updateRate = 90; 
   <script> NAF.options.useLerp = true; </script>
 
-  <!--XXXXXXXXXXXXXXXXXXX-->
-  <!--    used for flying in this demo  -->
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script> 
   <script>
-      // Hypnos-phi/aframe-extras@37fd255 is https://github.com/n5ro/aframe-extras/pull/373
-      // Also waiting https://github.com/n5ro/aframe-extras/pull/377 to be merged
-      // Redefine the alias for now:
       THREE.Math = THREE.MathUtils;
     </script>
   <script src="https://cdn.jsdelivr.net/gh/Hypnos-phi/aframe-extras@37fd255/dist/aframe-extras.controls.min.js"></script>
 
+    <script>
+        AFRAME.registerComponent('collider-check', {
+        dependencies: ['raycaster'],
+        
+        init: function () {
+            
+            var getCursor = document.getElementById('scene-cursor');
+            var checkit = false;
+            var correctPosition = getCursor.getAttribute('scale');
+
+            var data = this.data;  
+            var el = this.el;      
+          
+            this.el.addEventListener('raycaster-intersected', evt => {
+                this.raycaster = evt.detail.el;
+                let intersection = this.raycaster.components.raycaster.getIntersection(this.el);
+                console.log(`raycaster ${this.el.id} intersected!!!`);
+                getCursor.setAttribute('scale', {x: 0.1, y: 0.1, z: 0.1});        
+            });
+            
+            this.el.addEventListener('raycaster-intersected-cleared', evt => {         
+                getCursor.setAttribute('scale', {x: 0.05, y: 0.05, z: 0.05});
+            });
+
+            
+        },
+
+        tick: function () {
+            
+            var switched = false;
+
+            var getCursor = document.getElementById('scene-cursor');
+            var checkit = false;
+            var correctPosition = getCursor.getAttribute('rotation');
+
+            var data = this.data;  
+            var el = this.el;     
+            var testit =0;        
+        }
+        });
+    
   <link rel="stylesheet"
     type="text/css"
     href="/css/style.css" />
@@ -64,28 +92,18 @@
       <img id="groundTexture"
         src="https://cdn.aframe.io/a-painter/images/floor.jpg"
         crossorigin="anonymous" />
+      
       <img id="skyTexture"
         src="https://cdn.aframe.io/a-painter/images/sky.jpg"
         crossorigin="anonymous" />
 
-        
-      <img id="score-image" src="./assets/score.jpg">
-     
-
-      <!-- XXXXXXXXXXXXXX  -->
         <a-asset-item id="left-hand-model" src="./assets/leftHandHigh.glb"></a-asset-item>
         <a-asset-item id="right-hand-model" src="./assets/rightHandHigh.glb"></a-asset-item>
-      
-        <!-- WORK XXXXXXXXXXXXXX  -->
-      
-      <!-- Camera Rig / Player -->
+   
        <template id="camera-rig-template">
         <a-entity></a-entity>
       </template>
-      
-      <!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-
-        <!-- Hands -->
+    
         <template id="left-hand-template">
           <a-entity>
              <a-gltf-model class="tracked-left-hand" rotation="0 0 90" src="#left-hand-model"></a-gltf-model>
@@ -98,43 +116,19 @@
           </a-entity>
          </template>
 
-               <!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-
          <template id="left-hand-template" networked="template:#left-hand-template">
-          <!--<a-entity networked-hand-controls="hand:left;handModelStyle:controller;"networked="template:#left-hand-default-template"></a-entity>-->
-         <!-- tracked hand Left-->
          <a-entity>
          <a-gltf-model class="tracked-left-hand" rotation="0 0 90" position="0 0 0" src="#left-hand-model"></a-gltf-model>
          </a-entity> 
-
-
-
-        
-         <!-- oculus controllers -->
         </template>
 
-     <!-- <a-gltf-model class="tracked-right-hand" rotation="0 0 -90" src="#right-hand-model"></a-gltf-model> -->
-     <!--<a-entity
-         networked-hand-controls="hand:right;handModelStyle:controller;"
-        networked="template:#right-hand-default-template">
-         </a-entity>-->
+     
      <template id="right-hand-template" networked="template:#right-hand-template" >
-          <!--<a-entity networked="template:#right-hand-template">-->
-           <!--<a-entity networked-hand-controls="hand:right;handModelStyle:controller;"networked="template:#right-hand-default-template">-->
-        <!-- tracked hand right-->
          <a-entity>
              <a-gltf-model class="tracked-right-hand" rotation="0 0 -90" position="0 0 0" src="#right-hand-model"></a-gltf-model>
          </a-entity>
      </template>
 
-
-      <!-- Templates -->
-
-      <!--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-      <!-- tracked-vr-hands-->
-      
-
-      <!-- Avatar -->
       <template id="avatar-template">
         <a-entity class="avatar"
           networked-audio-source>
@@ -167,43 +161,37 @@
       <template id="mouth-template">
         <a-entity class="mouth">
 
-          <!--<a-circle class="bocca" color="#CCC" radius="1"></a-circle>-->
-
-          <a-box class="labbroSup"
+          <a-box class="lipUP"
             material="shader: standard"
             scale="0.2 0.05 0.1"></a-box>
-          <a-box class="labbroInf"
+          <a-box class="lipDown"
             material="shader: standard"
             scale="0.2 0.05 0.1"></a-box>
         </a-entity>
       </template>
 
-
-      <!--Block-->
       <template id="voxel">
         <a-entity class="box"
           geometry="primitive: box; height: 0.5; width: 0.5; depth: 0.5"
           material="shader: standard"
           random-color
-          bar-volume-diff></a-entity>
+          bar-volume-diff 
+          ></a-entity>
       </template>
 
-      <!--Hair-->
       <template id="hair-template">
         <a-entity class="hair"
           geometry="primitive: box"
           material="shader: standard"
           random-color></a-entity>
       </template>
-
-      <!-- /Templates -->
+            
     </a-assets>
 
-    <!-- Ambiente -->
     <a-cylinder id="ground"
       src="#groundTexture"
       radius="52"
-      height="0.1"></a-cylinder>
+      height="0.1" collider-check class="doo"></a-cylinder>
 
     <a-sky src="#skyTexture"
       theta-length="90"
@@ -215,30 +203,6 @@
       position="5 5 5"></a-entity>
     <!-- /Ambiente -->
 
-    <!--Avatar mio-->
-    <!-- XXXXXXXXXXXXXXXXXXXXXXX  -->
-    
-
-    <!--<a-entity id="player"
-      networked="template:#avatar-template;attachTemplateToLocal:false;"
-      camera
-      position="0 1.6 0"
-      spawn-in-circle="radius:3"
-      wasd-controls
-      look-controls
-      hairs="num:50">-->
-
-      <!-- 
-      <a-entity id="player"
-      networked="template:#avatar-template;attachTemplateToLocal:false;"
-      movement-controls="speed:0.3;" 
-      tracked-vr-hands
-      spawn-in-circle="radius:3" 
-      > -->
-    
-    <!-- XXXXXXXXXXXXXXXXXXXXXXX  -->
-    <!--work-->
-    
     <a-entity 
         id="player1" 
         movement-controls="speed:0.3;" 
@@ -246,114 +210,95 @@
         spawn-in-circle="radius:3" 
         networked="template:#camera-rig-template;attachTemplateToLocal:false;"     
       >
-    <!-- camera-rig-template -->
-      
-<!---
-      <a-entity camera look-controls>
-        <a-text value="Chord:"
-        scale=".2 .2 1"
-        position="0 .7 -1"
-        color="black"
-        chord></a-text>
-      <a-text value="RMS:"
-        scale=".2 .2 1"
-        position="0 .6 -1"
-        color="black"
-        rms></a-text>
-      <a-plane color="#CCC"
-        scale=".5 .3 .1"
-        position="-0 .7 -1.1">
-      </a-plane>
-    </a-entity>-->
-
+    
     <a-entity id="player" 
             networked="template: #avatar-template; attachTemplateToLocal: false;" 
             camera position="0 1.6 0" 
             position-listener
+            >
+          
+            <a-entity cursor="fuse: false; maxDistance: 1; timeout: 100"
+            raycaster="far: 2; interval: 1000; objects: .doo"></a-entity>
 
-            > <!--spawn-in-circle="radius:3" movement-controls="fly:true;" wasd-controls look-controls position-listener
-                tracked-vr-hands --> <!--click-->
-            <a-cursor color="yellow" intersection-spawn="event: click; template: #voxel"></a-cursor>
+            <a-entity 
+            cursor="fuse: false; maxDistance: 1; timeout: 500"
+            
+            position="0 0 -3"
+            geometry="primitive: ring"
+            material="color: yellow; shader: flat"
+            scale="0.05 0.05 0.05"
+            rotation = "0 0 0"
+            id="scene-cursor"
+
+            animation__press="property: scale; startEvents: mousedown; easing: easeInCubic; dur: 100; from: 0.05 0.05 0.05; to: 0.01 0.01 0.01; dir: alternate"
+            animation__pressCol="property: components.material.material.color;
+            type: color; startEvents: mousedown; easing: easeInCubic; dur: 100; from: yellow; to: orange; dir: alternate"
+
+            animation__release="property: scale; startEvents: mouseup; easing: easeInCubic; dur: 100; from: 0.01 0.01 0.01; to: 0.05 0.05 0.05; dir: alternate"
+            animation__releaseCol="property: components.material.material.color;
+            type: color; startEvents: mouseup; easing: easeInCubic; dur: 100; from: orange; to: yellow; dir: alternate"
+
+            intersection-spawn="event: click; template: #voxel"
+            rotate-cursor-a
+            >
+            </a-entity>
 
             <a-sphere class="head"
                 visible="false"
                 random-color></a-sphere>
       <a-entity networked="template:#mouth-template;attachTemplateToLocal:false;">
         <!--<a-circle class="bocca" color="#CCC" radius="1" labbro="type:bocc"></a-circle>-->
-        <a-box class="labbroSup"
+        <a-box class="lipUP"
                position="0 -0.1 -0.35"
                visible="false"
                labbro="type:sup"></a-box>
-        <a-box class="labbroInf"
+        <a-box class="lipDown"
                position="0 -0.22 -0.35"
                visible="false"
                labbro="type:inf"></a-box>
 
             <a-entity id="huddisplay">
-              <a-plane color="#00FFFFFF"
+              <a-plane 
               scale="1. 1. 1"
-              position="1 -0.7 0">
-            <a-text value="Chord:"
-                scale=".2 .2 1"
-                position="-1.15 .48 -1"
+              position="1 -0.7 0"
+              >
+            <a-text value="CHORD:"
+                scale=".25 .25 1"
+                position="-1.23 .39 -1"
                 color="black"
                 chord>
             </a-text>
             <a-text value="RMS: "
-                scale=".2 .2 1"
-                position="-1.15 .39 -1"
+                scale=".25 .25 1"
+                position="-1.23 .29 -1"
                 color="black"
                 rms>
             </a-text>
-            <a-plane color="#616161"
-                scale=".5 .3 .1"
-                position="-1 .4 -1.1">
+            <a-plane material="side: double; color: #6eccc6; transparent: true; opacity: 0.3"
+                scale=".6 .3 .1"
+                position="-1 .3 -1.1"
+                rotation="-15 0 0">
             </a-plane>
           </a-plane>
           </a-entity>
             
           </a-entity>
 
-
         </a-entity>
        
-        
-       <!--XXXXXXXXXXXXXXXXXX-->
-      <!--<a-cursor intersection-spawn="template:#voxel; event: click"
-        fuse="false"></a-cursor>-->
-
-      <!--HUD-->
-      <!-- XXXXXXXXXXXX-->
-      <!--
-      <a-text value="Chord:"
-        scale=".2 .2 1"
-        position="-1.2 .7 -1"
-        color="black"
-        chord></a-text>
-      <a-text value="RMS:"
-        scale=".2 .2 1"
-        position="-1.2 .6 -1"
-        color="black"
-        rms></a-text>
-      <a-plane color="#CCC"
-        scale=".5 .3 .1"
-        position="-1.1 .7 -1.1"></a-plane>
-      -->
-
       <a-box class="head"
         visible="false"
         random-color></a-box>
 
-      <!--Mouth-->
       <a-entity networked="template:#mouth-template;attachTemplateToLocal:false;">
         
-        <a-box class="labbroSup"
-          position="0 -0.1 0.15"
+        <a-box class="lipUP"
+          position="0 -0.01 15"
           visible="false"
           labbro="type:sup"></a-box>
           <!--<a-circle class="bocca" color="#CCC" radius="1" labbro="type:bocc"></a-circle>-->
-        <a-box class="labbroInf"
-          position="0 -0.22 0.15"
+        <a-box class="lipDown"
+          position="0 -0.3 0.15"
           visible="false"
           labbro="type:inf"></a-box>
       </a-entity>
@@ -362,7 +307,7 @@
     </a-entity>
 
     <a-entity id="bars"
-      bars-waveform="num: 128"> </a-entity> <!--256-->
+      bars-waveform="num: 50"> </a-entity> <!--256, 128-->
 
     <!--<a-text value="Chord:"
       negate="false"
@@ -371,12 +316,15 @@
       material=""
       chord></a-text>-->
 
+    <a-box position="30 0 30" height="22" width="150" depth="2" material="color: #0a0a0a"></a-box>
+    <a-box position="30 0 -30" height="22" width="150" depth="2" material="color: #0a0a0a"></a-box>
+    <a-box position="40 0 0" rotation="0 90 0" height="22" width="150" depth="2" material="color: #0a0a0a"></a-box>
+    <a-box position="-40 0 0" rotation="0 90 0" height="22" width="150" depth="2" material="color: #0a0a0a"></a-box>
+
   </a-scene>
 
   <script>
 
-    // <!-- XXXXXXXXXXX -->
-     // always register components before your scene
      AFRAME.registerComponent('tracked-vr-hands', {
         onEnterVR() {
           if (AFRAME.utils.device.isMobile()) return; // exclude e.g. cardboard, which lacks tracked controllers
@@ -397,19 +345,11 @@
         },
         init() {
           this.el.sceneEl.addEventListener('enter-vr', this.onEnterVR.bind(this));
-          // future improvements:
-          // pick up hand-controls events
-          // https://github.com/aframevr/aframe/blob/b164623dfa0d2548158f4b7da06157497cd4ea29/docs/components/hand-controls.md
-          // and broadcast the matching gestures to other connected clients
-          // possibly trigger the animation on the model itself using animation-mixer:
-          // https://github.com/n5ro/aframe-extras/tree/master/src/loaders
-          // could add as 'networked-hands' component within repo
+
         }
       });
 
       
-
-    // Define custom schema for syncing avatar color, set by random-color
     NAF.schemas.add({
       template: '#avatar-template',
       components: [
@@ -430,11 +370,11 @@
         'rotation',
         
         {
-          selector: '.labbroSup',
+          selector: '.lipUP',
           component: 'position',
         },
         {
-          selector: '.labbroInf',
+          selector: '.lipDown',
           component: 'position',
         }
         
@@ -469,7 +409,6 @@
     });
   </script>
 
-  <!-- HUD -->
   <div class="actions">
     <button id="mic-btn"
       type="button"

@@ -43,7 +43,11 @@ ________________________________________________________________________________
 
 * Follow the Getting Started tutorial for [Networked-AFrame](https://github.com/networked-aframe/networked-aframe/blob/master/docs/getting-started-local.md "NAF") 
 
-* Copy the files of the repo in the respective folders 
+* Clone the repo.
+
+* Move the two .html files (First_Playground.html and Second_Playground.html) into the /example folder of your NAF instance.
+
+* Then, copy the content of /assets /js /img into the respective folders of your NAF instance.
 
 * Test: First_Playground.html or Second_Playground.html
   
@@ -55,8 +59,3 @@ Open the following urls on your WebXR-compatible browser
 * [First Playground](https://clover-warm-flag.glitch.me/test_synth.html "First Playground")
 
 * [Second Playground](https://clover-warm-flag.glitch.me/test_essentia.html "Second Playground")
-
-
-
-
-

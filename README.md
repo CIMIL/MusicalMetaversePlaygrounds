@@ -1,17 +1,33 @@
 <h1>Musical Metaverse Playgrounds</h1>
 
+The “Musical Metaverse” (MM) promises a new dimension of musical expression, creation, and education through shared virtual environments. 
+However, the research on the MM is in its infancy. Little work has been done to understand the MM musical capabilities and its user experience. 
+One cause can be found in the lack of technologies capable of providing high-quality audio streaming, and complex enough musical interactions within shared virtual worlds. 
+Two promising candidates for bridging these gaps are web technologies such as WebXR and Web Audio, whose combination can potentially
+allow more accessible and interoperable networked immersive musical experiences. 
+To explore this possibility, we developed two prototypes of MM playgrounds. 
+We leveraged WebXR through Networked-AFrame, and Web Audio with Tone.js and Essentia.js to create and test immersive sonic experiences that conveniently run on the web browsers integrated into commercially available standalone Head-Mounted Displays.
+
+The **First playground** focuses on facilitating musical creation in a multi-user immersive application through real-time sound synthesis
+and binaural rendering.
+The **Second Playground** explores real-time audio analysis and music information retrieval for creating audio-reactive virtual shared environments.
+
 Details can be found at:
 
 > <em>Boem, Alberto, and Luca Turchet. "Musical Metaverse Playgrounds: exploring the design of shared virtual sonic experiences on web browsers." 
 2023 4th International Symposium on the Internet of Sounds. IEEE, 2023.</em>
 
+________________________________________________________________________________________________________________________________________
+
 * Require a VR Head-mounted Display (HMD) and a WebXR-compatible browser.
   
 * Tested on **Quest Browser** and **Wolvic** on **Oculus Quest 1**, and **Meta Quest 2**.
 
+________________________________________________________________________________________________________________________________________
+
 <h2>Based on:</h2> 
 
-* Networked-AFrame [(NAF)](https://github.com/networked-aframe/networked-aframe/tree/master "NAF")
+* [Networked-AFrame (NAF)](https://github.com/networked-aframe/networked-aframe/tree/master "NAF")
 * [Tone.js](https://tonejs.github.io/ "Tone")
 * [Essentia.js](https://mtg.github.io/essentia.js/ "Essentia")
 

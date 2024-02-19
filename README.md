@@ -1,7 +1,9 @@
 <h1>Musical Metaverse Playgrounds</h1>
 
 Details can be found at:
-<em>Boem, Alberto, and Luca Turchet. "Musical Metaverse Playgrounds: exploring the design of shared virtual sonic experiences on web browsers." 2023 4th International Symposium on the Internet of Sounds. IEEE, 2023.</em>
+
+> <em>Boem, Alberto, and Luca Turchet. "Musical Metaverse Playgrounds: exploring the design of shared virtual sonic experiences on web browsers." 
+2023 4th International Symposium on the Internet of Sounds. IEEE, 2023.</em>
 
 * Require a VR Head-mounted Display (HMD) and a WebXR-compatible browser.
   
@@ -26,9 +28,9 @@ ________________________________________________________________________________
 * Test: First_Playground.html or Second_Playground.html
   
 
-<h3>Test directly on Glitch</h3>
+<h3>Test on Glitch</h3>
 
-Open the following urls on your compatible browser
+Open the following urls on your WebXR-compatible browser
 
 * [First Playground](https://clover-warm-flag.glitch.me/test_synth.html "First Playground")
 

@@ -13,8 +13,9 @@ const port = process.env.PORT || 8080;
 
 // Setup and configure Express http server.
 const app = express();
+app.use(express.static(path.resolve(__dirname, "..", "examples")));
 
-// Serve the bundle in-memory in development (needs to be before the express.static)
+// Serve the example and build the bundle in development.
 if (process.env.NODE_ENV === "development") {
   const webpackMiddleware = require("webpack-dev-middleware");
   const webpack = require("webpack");
@@ -22,19 +23,18 @@ if (process.env.NODE_ENV === "development") {
 
   app.use(
     webpackMiddleware(webpack(config), {
-      publicPath: "/dist/"
+      publicPath: "/"
     })
   );
 }
-
-// Serve the files from the examples folder
-app.use(express.static(path.resolve(__dirname, "..", "examples")));
 
 // Start Express http server
 const webServer = http.createServer(app);
 
 // Start Socket.io so it attaches itself to Express server
 const socketServer = socketIo.listen(webServer, {"log level": 1});
+
+/*
 const myIceServers = [
   {"urls":"stun:stun1.l.google.com:19302"},
   {"urls":"stun:stun2.l.google.com:19302"},
@@ -49,6 +49,22 @@ const myIceServers = [
   //   "credential":"[CREDENTIAL]"
   // }
 ];
+*/
+
+
+var myIceServers = [{"url":"stun:fr-turn1.xirsys.com:8080"},
+{
+  "url":"turn:fr-turn1.xirsys.com:80?transport=udp",
+  "username":"Y3shFa0HTehSPArZkpGV-f9RJDAcWPgSj94J-mxchD6bwvEQBq-IaANg-PqTS8uzAAAAAGXPnzwyNXRoRmxvb3I=",
+  "credential":"2e68bcec-ccf3-11ee-bf80-0242ac120004"
+},
+{
+  "url":"turn:fr-turn1.xirsys.com:3478?transport=udp",
+  "username":"Y3shFa0HTehSPArZkpGV-f9RJDAcWPgSj94J-mxchD6bwvEQBq-IaANg-PqTS8uzAAAAAGXPnzwyNXRoRmxvb3I=",
+  "credential":"2e68bcec-ccf3-11ee-bf80-0242ac120004"
+}];
+
+
 easyrtc.setOption("appIceServers", myIceServers);
 easyrtc.setOption("logLevel", "debug");
 easyrtc.setOption("demosEnable", false);

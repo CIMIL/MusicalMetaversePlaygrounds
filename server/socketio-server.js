@@ -11,8 +11,9 @@ const port = process.env.PORT || 8080;
 
 // Setup and configure Express http server.
 const app = express();
+app.use(express.static(path.resolve(__dirname, "..", "examples")));
 
-// Serve the bundle in-memory in development (needs to be before the express.static)
+// Serve the example and build the bundle in development.
 if (process.env.NODE_ENV === "development") {
   const webpackMiddleware = require("webpack-dev-middleware");
   const webpack = require("webpack");
@@ -20,13 +21,10 @@ if (process.env.NODE_ENV === "development") {
 
   app.use(
     webpackMiddleware(webpack(config), {
-      publicPath: "/dist/"
+      publicPath: "/"
     })
   );
 }
-
-// Serve the files from the examples folder
-app.use(express.static(path.resolve(__dirname, "..", "examples")));
 
 // Start Express http server
 const webServer = http.createServer(app);

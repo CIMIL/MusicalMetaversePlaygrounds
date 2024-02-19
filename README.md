@@ -19,6 +19,8 @@ Details can be found at:
 > <em>Boem, Alberto, and Luca Turchet. "Musical Metaverse Playgrounds: exploring the design of shared virtual sonic experiences on web browsers." 
 2023 4th International Symposium on the Internet of Sounds. IEEE, 2023.</em>
 
+Read the full paper [here](https://ieeexplore.ieee.org/abstract/document/10335297?casa_token=QTBiuY2jNLgAAAAA:iOtoFGqdF7PeA7mU17M807K96R7vUEdA8czJYaw7WCrwo7a2ujxE48w8dPL83qD_J2HMjsbE6Mg "Musical Metaverse Playground (IEEE)").
+
 ________________________________________________________________________________________________________________________________________
 
 * Require a VR Head-mounted Display (HMD) and a WebXR-compatible browser.

@@ -5,11 +5,13 @@ However, the research on the MM is in its infancy. Little work has been done to 
 One cause can be found in the lack of technologies capable of providing high-quality audio streaming, and complex enough musical interactions within shared virtual worlds. 
 Two promising candidates for bridging these gaps are web technologies such as WebXR and Web Audio, whose combination can potentially
 allow more accessible and interoperable networked immersive musical experiences. 
+
 To explore this possibility, we developed two prototypes of MM playgrounds. 
 We leveraged WebXR through Networked-AFrame, and Web Audio with Tone.js and Essentia.js to create and test immersive sonic experiences that conveniently run on the web browsers integrated into commercially available standalone Head-Mounted Displays.
 
 The **First playground** focuses on facilitating musical creation in a multi-user immersive application through real-time sound synthesis
 and binaural rendering.
+
 The **Second Playground** explores real-time audio analysis and music information retrieval for creating audio-reactive virtual shared environments.
 
 Details can be found at:

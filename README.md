@@ -54,7 +54,7 @@ ________________________________________________________________________________
 
 <h3>Test on Glitch</h3>
 
-Open the following urls on your WebXR-compatible browser
+Open the following urls on your WebXR-compatible browser and a XR headsets such as Meta Quest (controllers are required)
 
 * [First Playground](https://clover-warm-flag.glitch.me/test_synth.html "First Playground")
 

@@ -486,7 +486,7 @@ function sendTimeStamp(nameEvent){
 }
 
 ///////////////////////////
-
+/*
 //WIP
 AFRAME.registerComponent('rotate-cursor-a', {
     schema: {
@@ -502,7 +502,7 @@ AFRAME.registerComponent('rotate-cursor-a', {
     }
 
   });
-
+*/
 /////////////////////////////////////////////////////////////////////////////
 
 //WIP

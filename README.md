@@ -50,7 +50,12 @@ ________________________________________________________________________________
 * Then, copy the content of /assets /js /img into the respective folders of your NAF instance.
 
 * Test: First_Playground.html or Second_Playground.html
-  
+
+<h3>Clone and Test locally</h3>
+
+* Follow the instructions:
+    - [First Playground](https://github.com/CIMIL/MusicalMetaversePlaygrounds_SoundSpace "First Playground") (aka "Synth Land")
+    - [Second Playground](https://github.com/CIMIL/MusicalMetaversePlaygrounds_SynthLand "First Playground") (aka "Sound Space")
 
 <h3>Test on Glitch</h3>
 
